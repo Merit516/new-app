@@ -8,6 +8,7 @@ pipeline {
                     git credentialsId: 'git-credenails', url: 'https://github.com/Merit516/new-app.git'
                 }
             }
+     }
         
       
         
@@ -23,6 +24,7 @@ pipeline {
                 }
             }
         }
+    }
     
          stage('deploy') {
             
@@ -40,4 +42,4 @@ pipeline {
         }
         
     }
-}
+
