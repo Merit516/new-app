@@ -1,5 +1,13 @@
 pipeline {
     agent any
+      stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    git credentialsId: 'git-credenails', url: 'https://github.com/your-username/your-repo.git'
+                }
+            }
+        }
 
     stages {
         stage('build') {
