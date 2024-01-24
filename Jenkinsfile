@@ -2,13 +2,7 @@ pipeline {
     agent any
            
     stages {
-     stage('Checkout') {
-            steps {
-                script {
-                    git credentialsId: 'git-credenail', url: 'https://github.com/Merit516/new-app.git'
-                }
-            }
-     }
+  
         
       
         
