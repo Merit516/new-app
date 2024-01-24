@@ -14,6 +14,20 @@ pipeline {
                 }
             }
         }
+         stage('deploy') {
+            
+            steps {
+                echo 'deploy'
+                withCredentials([file(credentialsId: 'openshift-config', variable: 'KUBECONFIG_SOHAG')]) {
+                    sh '''
+                        mv Deployment/deploy.yaml Deployment/tmp.yaml
+                        cat Deployment/tmp.yaml | envsubst > Deployment/deploy.yaml
+                        rm -f Deployment/tmp.yaml
+                        oc apply -f Deployment --kubeconfig ${KUBECONFIG_SOHAG} -n merit
+                    '''
+                }
+            }
+        }
         
     }
 }
