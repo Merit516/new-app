@@ -18,12 +18,12 @@ pipeline {
             
             steps {
                 echo 'deploy'
-                withCredentials([file(credentialsId: 'openshift-config', variable: 'OPENSHIFT_cONFIG')]) {
+                withCredentials([file(credentialsId: 'openshift-config', variable: 'OPENSHIFT_CONFIG')]) {
                     sh '''
                         mv Deployment/deploy.yaml Deployment/tmp.yaml
                         cat Deployment/tmp.yaml | envsubst > Deployment/deploy.yaml
                         rm -f Deployment/tmp.yaml
-                        oc apply -f Deployment --kubeconfig ${OPENSHIFT_cONFIG} -n merit
+                        oc apply -f Deployment --kubeconfig ${OPENSHIFT_CONFIG} -n merit
                     '''
                 }
             }
