@@ -5,7 +5,7 @@ pipeline {
      stage('Checkout') {
             steps {
                 script {
-                    git credentialsId: 'git-credenails', url: 'https://github.com/Merit516/new-app.git'
+                    git credentialsId: 'git-credenail', url: 'https://github.com/Merit516/new-app.git'
                 }
             }
      }
