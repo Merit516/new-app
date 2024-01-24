@@ -1,32 +1,19 @@
 pipeline {
-    agent { label "iti-sys-admin-sohaga" }
+    agent any
 
     stages {
         stage('build') {
             steps {
                 echo 'build'
-                withCredentials([usernamePassword(credentialsId: 'iti-sys-admin-sohag-docker-cred', usernameVariable: 'USERNAME_SOHAG', passwordVariable: 'PASSWORD_SOHAG')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME_DOCKER', passwordVariable: 'PASSWORD_DOCKER')]) {
                     sh '''
-                        docker login -u ${USERNAME_SOHAG} -p ${PASSWORD_SOHAG}
-                        docker build -t kareemelkasaby/bakehouseitisohag:v${BUILD_NUMBER} .
-                        docker push kareemelkasaby/bakehouseitisohag:v${BUILD_NUMBER}
+                        docker login -u ${USERNAME_DOCKER} -p ${PASSWORD_DOCKER}
+                        docker build -t merit237/new-app:v${BUILD_NUMBER} .
+                        docker push merit237/new-app:v${BUILD_NUMBER}
                     '''
                 }
             }
         }
-        stage('deploy') {
-            
-            steps {
-                echo 'deploy'
-                withCredentials([file(credentialsId: 'iti-sys-admin-sohag-kubeconfig-cred', variable: 'KUBECONFIG_SOHAG')]) {
-                    sh '''
-                        mv Deployment/deploy.yaml Deployment/tmp.yaml
-                        cat Deployment/tmp.yaml | envsubst > Deployment/deploy.yaml
-                        rm -f Deployment/tmp.yaml
-                        kubectl apply -f Deployment --kubeconfig ${KUBECONFIG_SOHAG}
-                    '''
-                }
-            }
-        }
+        
     }
 }
