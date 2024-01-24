@@ -1,16 +1,16 @@
 pipeline {
     agent any
-      stages {
-        stage('Checkout') {
+           
+    stages {
+     stage('Checkout') {
             steps {
                 script {
                     git credentialsId: 'git-credenails', url: 'https://github.com/Merit516/new-app.git'
                 }
             }
-        }
-      }    
-         
-    stages {
+        
+      
+        
         stage('build') {
             steps {
                 echo 'build'
@@ -23,7 +23,7 @@ pipeline {
                 }
             }
         }
-    }
+    
          stage('deploy') {
             
             steps {
